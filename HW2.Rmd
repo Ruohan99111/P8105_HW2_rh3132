@@ -31,15 +31,27 @@ pols_cleaned <- pols_df %>%
 pols_cleaned = pols_cleaned %>%
   mutate(month = month.name[as.integer(month)])
 ```
+
+```{r new variable}
+pols_cleaned$president <-   
+   ifelse(pols_cleaned$prez_gop == 1, "gop",
+      ifelse(pols_cleaned$prez_dem == 1, "dem", NA))
+```
+
 ```{r remove columns}
 pols_cleaned = pols_cleaned %>%
   select(-day,-prez_dem,-prez_gop)
 ```
 
+
 ##checking if data is cleaned
 ```{r}
 head(pols_cleaned)
 ```
+
+
+
+
 
 
 
