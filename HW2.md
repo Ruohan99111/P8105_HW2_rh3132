@@ -81,6 +81,12 @@ pols_cleaned = pols_cleaned %>%
 ```
 
 ``` r
+pols_cleaned$president <-   
+   ifelse(pols_cleaned$prez_gop == 1, "gop",
+      ifelse(pols_cleaned$prez_dem == 1, "dem", NA))
+```
+
+``` r
 pols_cleaned = pols_cleaned %>%
   select(-day,-prez_dem,-prez_gop)
 ```
@@ -91,12 +97,40 @@ pols_cleaned = pols_cleaned %>%
 head(pols_cleaned)
 ```
 
-    ## # A tibble: 6 × 8
-    ##   year  month    gov_gop sen_gop rep_gop gov_dem sen_dem rep_dem
-    ##   <chr> <chr>      <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
-    ## 1 1947  January       23      51     253      23      45     198
-    ## 2 1947  February      23      51     253      23      45     198
-    ## 3 1947  March         23      51     253      23      45     198
-    ## 4 1947  April         23      51     253      23      45     198
-    ## 5 1947  May           23      51     253      23      45     198
-    ## 6 1947  June          23      51     253      23      45     198
+    ## # A tibble: 6 × 9
+    ##   year  month    gov_gop sen_gop rep_gop gov_dem sen_dem rep_dem president
+    ##   <chr> <chr>      <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>    
+    ## 1 1947  January       23      51     253      23      45     198 dem      
+    ## 2 1947  February      23      51     253      23      45     198 dem      
+    ## 3 1947  March         23      51     253      23      45     198 dem      
+    ## 4 1947  April         23      51     253      23      45     198 dem      
+    ## 5 1947  May           23      51     253      23      45     198 dem      
+    ## 6 1947  June          23      51     253      23      45     198 dem
+
+## Cleaning snp.csv
+
+``` r
+snp_cleaned <- snp_df %>%
+  separate(date, into = c("month", "day", "year"), sep = "/") %>%
+  mutate(month = month.abb[as.numeric(month)]) %>%
+   mutate(year = as.numeric(year),
+         year = ifelse(year >= 50, 1900 + year, 2000 + year)) %>%
+  select (year, month, everything()) %>%
+  select(-day)
+```
+
+\##check snp data
+
+``` r
+head(snp_cleaned)
+```
+
+    ## # A tibble: 6 × 3
+    ##    year month close
+    ##   <dbl> <chr> <dbl>
+    ## 1  2015 Jul   2080.
+    ## 2  2015 Jun   2063.
+    ## 3  2015 May   2107.
+    ## 4  2015 Apr   2086.
+    ## 5  2015 Mar   2068.
+    ## 6  2015 Feb   2104.

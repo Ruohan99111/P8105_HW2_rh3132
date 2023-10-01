@@ -43,11 +43,28 @@ pols_cleaned = pols_cleaned %>%
   select(-day,-prez_dem,-prez_gop)
 ```
 
-
 ##checking if data is cleaned
 ```{r}
 head(pols_cleaned)
 ```
+
+## Cleaning snp.csv
+```{r}
+snp_cleaned <- snp_df %>%
+  separate(date, into = c("month", "day", "year"), sep = "/") %>%
+  mutate(month = month.abb[as.numeric(month)]) %>%
+   mutate(year = as.numeric(year),
+         year = ifelse(year >= 50, 1900 + year, 2000 + year)) %>%
+  select (year, month, everything()) %>%
+  select(-day)
+```
+##check snp data
+```{r}
+head(snp_cleaned)
+```
+
+
+
 
 
 
