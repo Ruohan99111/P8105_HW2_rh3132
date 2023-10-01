@@ -71,30 +71,30 @@ snp_df = janitor::clean_names(snp_df)
 \##Date cleaning
 
 ``` r
-pols_cleaned <- pols_df %>%
+pols_df <- pols_df %>%
   separate(mon, into = c('year', 'month', 'day'), sep = '-')
 ```
 
 ``` r
-pols_cleaned = pols_cleaned %>%
+pols_df = pols_df %>%
   mutate(month = month.name[as.integer(month)])
 ```
 
 ``` r
-pols_cleaned$president <-   
-   ifelse(pols_cleaned$prez_gop == 1, "gop",
-      ifelse(pols_cleaned$prez_dem == 1, "dem", NA))
+pols_df$president <-   
+   ifelse(pols_df$prez_gop == 1, "gop",
+      ifelse(pols_df$prez_dem == 1, "dem", NA))
 ```
 
 ``` r
-pols_cleaned = pols_cleaned %>%
+pols_df = pols_df %>%
   select(-day,-prez_dem,-prez_gop)
 ```
 
 \##checking if data is cleaned
 
 ``` r
-head(pols_cleaned)
+head(pols_df)
 ```
 
     ## # A tibble: 6 × 9
@@ -110,7 +110,7 @@ head(pols_cleaned)
 ## Cleaning snp.csv
 
 ``` r
-snp_cleaned <- snp_df %>%
+snp_df <- snp_df %>%
   separate(date, into = c("month", "day", "year"), sep = "/") %>%
   mutate(month = month.abb[as.numeric(month)]) %>%
    mutate(year = as.numeric(year),
@@ -122,7 +122,7 @@ snp_cleaned <- snp_df %>%
 \##check snp data
 
 ``` r
-head(snp_cleaned)
+head(snp_df)
 ```
 
     ## # A tibble: 6 × 3
@@ -134,3 +134,68 @@ head(snp_cleaned)
     ## 4  2015 Apr   2086.
     ## 5  2015 Mar   2068.
     ## 6  2015 Feb   2104.
+
+## tidy unemployment data
+
+``` r
+unemployment_df <- unemployment_df %>%
+  pivot_longer(cols = jan:dec, names_to = "month", values_to = "unemployment_rate")
+```
+
+``` r
+head(unemployment_df)
+```
+
+    ## # A tibble: 6 × 3
+    ##    year month unemployment_rate
+    ##   <dbl> <chr>             <dbl>
+    ## 1  1948 jan                 3.4
+    ## 2  1948 feb                 3.8
+    ## 3  1948 mar                 4  
+    ## 4  1948 apr                 3.9
+    ## 5  1948 may                 3.5
+    ## 6  1948 jun                 3.6
+
+\##Merging dataset
+
+``` r
+pols_df$month <- month.abb[match(pols_df$month, month.name)]
+
+pols_df$year <- as.numeric(pols_df$year)
+```
+
+``` r
+snp_df$month <- tools::toTitleCase(tolower(snp_df$month))
+```
+
+``` r
+unemployment_df$month <- tools::toTitleCase(unemployment_df$month)
+```
+
+``` r
+merged_data <- left_join(pols_df, snp_df, by = c("year", "month"))
+```
+
+``` r
+final_merged_data <- left_join(merged_data, unemployment_df, by = c("year", "month"))
+```
+
+``` r
+print(final_merged_data)
+```
+
+    ## # A tibble: 822 × 11
+    ##     year month gov_gop sen_gop rep_gop gov_dem sen_dem rep_dem president close
+    ##    <dbl> <chr>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>     <dbl>
+    ##  1  1947 Jan        23      51     253      23      45     198 dem          NA
+    ##  2  1947 Feb        23      51     253      23      45     198 dem          NA
+    ##  3  1947 Mar        23      51     253      23      45     198 dem          NA
+    ##  4  1947 Apr        23      51     253      23      45     198 dem          NA
+    ##  5  1947 May        23      51     253      23      45     198 dem          NA
+    ##  6  1947 Jun        23      51     253      23      45     198 dem          NA
+    ##  7  1947 Jul        23      51     253      23      45     198 dem          NA
+    ##  8  1947 Aug        23      51     253      23      45     198 dem          NA
+    ##  9  1947 Sep        23      51     253      23      45     198 dem          NA
+    ## 10  1947 Oct        23      51     253      23      45     198 dem          NA
+    ## # ℹ 812 more rows
+    ## # ℹ 1 more variable: unemployment_rate <dbl>

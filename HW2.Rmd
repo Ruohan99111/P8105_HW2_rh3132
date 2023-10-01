@@ -24,33 +24,33 @@ snp_df = janitor::clean_names(snp_df)
 
 ##Date cleaning
 ```{r pols clean}
-pols_cleaned <- pols_df %>%
+pols_df <- pols_df %>%
   separate(mon, into = c('year', 'month', 'day'), sep = '-')
 ```
 ```{r replace name}
-pols_cleaned = pols_cleaned %>%
+pols_df = pols_df %>%
   mutate(month = month.name[as.integer(month)])
 ```
 
 ```{r new variable}
-pols_cleaned$president <-   
-   ifelse(pols_cleaned$prez_gop == 1, "gop",
-      ifelse(pols_cleaned$prez_dem == 1, "dem", NA))
+pols_df$president <-   
+   ifelse(pols_df$prez_gop == 1, "gop",
+      ifelse(pols_df$prez_dem == 1, "dem", NA))
 ```
 
 ```{r remove columns}
-pols_cleaned = pols_cleaned %>%
+pols_df = pols_df %>%
   select(-day,-prez_dem,-prez_gop)
 ```
 
 ##checking if data is cleaned
 ```{r}
-head(pols_cleaned)
+head(pols_df)
 ```
 
 ## Cleaning snp.csv
 ```{r}
-snp_cleaned <- snp_df %>%
+snp_df <- snp_df %>%
   separate(date, into = c("month", "day", "year"), sep = "/") %>%
   mutate(month = month.abb[as.numeric(month)]) %>%
    mutate(year = as.numeric(year),
@@ -59,20 +59,45 @@ snp_cleaned <- snp_df %>%
   select(-day)
 ```
 ##check snp data
-```{r}
-head(snp_cleaned)
+```{r check snp data}
+head(snp_df)
+```
+
+## tidy unemployment data
+```{r tidy unemployment data}
+unemployment_df <- unemployment_df %>%
+  pivot_longer(cols = jan:dec, names_to = "month", values_to = "unemployment_rate")
 ```
 
 
+```{r check unemployment data}
+head(unemployment_df)
+```
 
+##Merging dataset
+```{r change month variable}
+pols_df$month <- month.abb[match(pols_df$month, month.name)]
 
+pols_df$year <- as.numeric(pols_df$year)
+```
+```{r change to the same format}
+snp_df$month <- tools::toTitleCase(tolower(snp_df$month))
+```
+```{r merge files}
+unemployment_df$month <- tools::toTitleCase(unemployment_df$month)
+```
 
+```{r merge snp and pols dataset}
+merged_data <- left_join(pols_df, snp_df, by = c("year", "month"))
+```
 
+```{r merge final dataset}
+final_merged_data <- left_join(merged_data, unemployment_df, by = c("year", "month"))
+```
 
-
-
-
-
+```{r check and observeation}
+print(final_merged_data)
+```
 
 
 
