@@ -32,6 +32,10 @@ pols_df = read_csv("HW2data/pols-month.csv")
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ``` r
+pols_df = janitor::clean_names(pols_df)
+```
+
+``` r
 unemployment_df = read_csv("HW2data/unemployment.csv")
 ```
 
@@ -42,6 +46,10 @@ unemployment_df = read_csv("HW2data/unemployment.csv")
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+unemployment_df = janitor::clean_names(unemployment_df)
+```
 
 ``` r
 snp_df = read_csv("HW2data/snp.csv")
@@ -56,4 +64,39 @@ snp_df = read_csv("HW2data/snp.csv")
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
+``` r
+snp_df = janitor::clean_names(snp_df)
+```
+
 \##Date cleaning
+
+``` r
+pols_cleaned <- pols_df %>%
+  separate(mon, into = c('year', 'month', 'day'), sep = '-')
+```
+
+``` r
+pols_cleaned = pols_cleaned %>%
+  mutate(month = month.name[as.integer(month)])
+```
+
+``` r
+pols_cleaned = pols_cleaned %>%
+  select(-day,-prez_dem,-prez_gop)
+```
+
+\##checking if data is cleaned
+
+``` r
+head(pols_cleaned)
+```
+
+    ## # A tibble: 6 × 8
+    ##   year  month    gov_gop sen_gop rep_gop gov_dem sen_dem rep_dem
+    ##   <chr> <chr>      <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>
+    ## 1 1947  January       23      51     253      23      45     198
+    ## 2 1947  February      23      51     253      23      45     198
+    ## 3 1947  March         23      51     253      23      45     198
+    ## 4 1947  April         23      51     253      23      45     198
+    ## 5 1947  May           23      51     253      23      45     198
+    ## 6 1947  June          23      51     253      23      45     198

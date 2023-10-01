@@ -11,15 +11,40 @@ library(tidyverse)
 
 ```{r pols}
 pols_df = read_csv("HW2data/pols-month.csv")
+pols_df = janitor::clean_names(pols_df)
 ```
 ```{r unemployment}
 unemployment_df = read_csv("HW2data/unemployment.csv")
+unemployment_df = janitor::clean_names(unemployment_df)
 ```
 ```{r snp}
 snp_df = read_csv("HW2data/snp.csv")
+snp_df = janitor::clean_names(snp_df)
 ```
 
 ##Date cleaning
+```{r pols clean}
+pols_cleaned <- pols_df %>%
+  separate(mon, into = c('year', 'month', 'day'), sep = '-')
+```
+```{r replace name}
+pols_cleaned = pols_cleaned %>%
+  mutate(month = month.name[as.integer(month)])
+```
+```{r remove columns}
+pols_cleaned = pols_cleaned %>%
+  select(-day,-prez_dem,-prez_gop)
+```
+
+##checking if data is cleaned
+```{r}
+head(pols_cleaned)
+```
+
+
+
+
+
 
 
  
