@@ -1,0 +1,28 @@
+---
+title: "P8105 HW2"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+```
+
+# Read in some data
+
+```{r pols}
+pols_df = read_csv("HW2data/pols-month.csv")
+```
+```{r unemployment}
+unemployment_df = read_csv("HW2data/unemployment.csv")
+```
+```{r snp}
+snp_df = read_csv("HW2data/snp.csv")
+```
+
+##Date cleaning
+
+
+ 
+
+
+
