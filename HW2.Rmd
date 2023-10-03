@@ -183,19 +183,21 @@ baseline_df = read.csv("data_mci/MCI_baseline.csv",  skip=1) |>
   janitor::clean_names()
 ```
 
-The data currently has `r nrow(baseline_df)` observations.
 
+There are `r nrow(baseline_df)` participants recruited
 
 ```{r clean baseline data}
 baseline_df <- baseline_df |>
   mutate(
-    sex = as.character (sex, '1' = "Male", '0' = "Female"),
-         apoe4 = as.character(apoe4, '0' = "Non-Carrier", '1' = "Carrier")) |>
+    sex = recode (sex, '1' = "Male", '0' = "Female"),
+         apoe4 = recode(apoe4, '0' = "Non-Carrier", '1' = "Carrier")) |>
   filter(age_at_onset !=".")
 
 ```
 
-After cleaning, the number of observations that had an age of onset for MCI was `r nrow(baseline_df)`
+The average baseline age is `r round(mean(pull(baseline_df,current_age)),digits=2)` years.
+The proportion of women in the study are APOE4 carriers are  `r round(nrow(filter(baseline_df, sex=="Female", apoe4=="Carrier"))/nrow(filter(baseline_df, sex=="Female")),digits=2)`
+
 
 
 

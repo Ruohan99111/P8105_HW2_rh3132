@@ -315,15 +315,15 @@ baseline_df = read.csv("data_mci/MCI_baseline.csv",  skip=1) |>
   janitor::clean_names()
 ```
 
-The data currently has 483 observations.
+There are 483 participants recruited
 
 ``` r
 baseline_df <- baseline_df |>
   mutate(
-    sex = as.character (sex, '1' = "Male", '0' = "Female"),
-         apoe4 = as.character(apoe4, '0' = "Non-Carrier", '1' = "Carrier")) |>
+    sex = recode (sex, '1' = "Male", '0' = "Female"),
+         apoe4 = recode(apoe4, '0' = "Non-Carrier", '1' = "Carrier")) |>
   filter(age_at_onset !=".")
 ```
 
-After cleaning, the number of observations that had an age of onset for
-MCI was 97
+The average baseline age is 65.61 years. The proportion of women in the
+study are APOE4 carriers are 0.65
