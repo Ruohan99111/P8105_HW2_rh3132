@@ -263,3 +263,26 @@ gwynnda_df <- read_excel("HW2data/202309 Trash Wheel Collection Data.xlsx", shee
   ) %>%
   filter(dumpster != "NA")
 ```
+
+``` r
+combined_df <- bind_rows(mrtrash_df, prof_trash_df, gwynnda_df)
+```
+
+``` r
+sum(pull(prof_trash_df, weight_tons))
+```
+
+    ## [1] 216.26
+
+The total weight of trash collected by Professor Trash Wheel was 216.26
+tons.
+
+``` r
+total_cigarette_butts_july_2021 <- gwynnda_df %>%
+  filter(wheel == "gwynnda", year == 2021, month == "July") %>%
+  summarise(total_cigarette_butts = sum(cigarette_butts, na.rm = TRUE)) %>%
+  pull(total_cigarette_butts)
+```
+
+The total number of cigarette butts collected by Gwynnda in July of 2021
+is 1.63^{4}.
