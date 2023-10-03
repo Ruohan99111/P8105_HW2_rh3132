@@ -199,3 +199,39 @@ print(final_merged_data)
     ## 10  1947 Oct        23      51     253      23      45     198 dem          NA
     ## # ℹ 812 more rows
     ## # ℹ 1 more variable: unemployment_rate <dbl>
+
+\##The final_merge_data include 822 rows and 11 column, comprises three
+primary sources of data. Pols_df is political data about the monthly
+representation of Republican and Democratic officials at the levels of
+governor, senator and representative. the snp_df data is the financial
+data about the monthly closing value for S&P stock index, using as a
+benchmark for market performance. the unemployment_df presents the
+economic monthly umenemployment rates. the final_merged_data spans from
+1947 to 2015, which is a wide range of information. The variables are
+year, month, gov_gop, sen_gop, rep_gop, gov_dem, sen_dem, rep_dem,
+president, close and unemployment.
+
+\##Problem 2
+
+``` r
+library(readxl)
+library(dplyr)
+```
+
+``` r
+mrtrash_df = 
+  read_excel("HW2data/202309 Trash Wheel Collection Data.xlsx", sheet="Mr. Trash Wheel", range =cell_cols("A:N")) |> 
+  janitor::clean_names() 
+```
+
+``` r
+mrtrash_df <- mrtrash_df %>%
+separate(date, into = c("year_2", "month_num","day"), convert = TRUE) |>
+  select(-year_2) |>
+  mutate(homes_powered = weight_tons * 500/30,
+         year = as.numeric(year)) |>
+  mutate (wheel ="mtw") |>
+  filter(dumpster !="NA")
+```
+
+## Professor Trash Wheel
