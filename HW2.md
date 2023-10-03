@@ -334,7 +334,8 @@ The proportion of women in the study are APOE4 carriers are 0.65
 ``` r
 amyloid_df = 
   read_csv("data_mci/mci_amyloid.csv",skip = 1) |> 
-  janitor::clean_names() 
+  janitor::clean_names() |>
+rename(id = study_id)
 ```
 
     ## Rows: 487 Columns: 6
@@ -345,3 +346,5 @@ amyloid_df =
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+Check for Unique Participants in baseline_df and amyloid_df

@@ -204,8 +204,12 @@ The proportion of women in the study are APOE4 carriers are  `r round(nrow(filte
 ```{r import amyloid data}
 amyloid_df = 
   read_csv("data_mci/mci_amyloid.csv",skip = 1) |> 
-  janitor::clean_names() 
+  janitor::clean_names() |>
+rename(id = study_id)
 ```
+
+Check for Unique Participants in baseline_df and amyloid_df
+
 
 
 
