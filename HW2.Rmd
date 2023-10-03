@@ -176,14 +176,24 @@ The total number of cigarette butts collected by Gwynnda in July of 2021 is
 ##Summary description of the data
 The Trash Wheel dataset is a comprehensive record of trash collection spanning multiple entries, with a total of 845 observations. Each observation in the dataset provides details about the specific `dumpster used`, the `month`, `year`, and specific `day` of the collection, as well as the `month_num` for easier chronological sorting. In terms of the collected trash's characteristics, the dataset offers insights into the `weight_tons` of the trash and its `volume_cubic_yards`. Additionally, to give a more granular view of the types of trash collected, the dataset provides specific counts for items like `plastic_bottles`, `polystyrene`, `cigarette_butts`, `glass_bottles`, `plastic_bags`, and `wrappers`. Interestingly, there's even a count for `sports_balls`. To provide an environmental perspective, a derived metric, `homes_powered`, estimates the number of homes that could be powered from the energy saved by the trash collection. Lastly, the `wheel` variable indicates which specific Trash Wheel device was responsible for the collection. This dataset offers a thorough overview of the efforts and impacts of the Trash Wheel initiative over time.
 
-##Problem 3
+## Problem 3
 
-```{r import data}
+```{r import baseline data}
 baseline_df = read.csv("data_mci/MCI_baseline.csv",  skip=1) |>
   janitor::clean_names()
 ```
 
 The data currently has `r nrow(baseline_df)` observations.
+
+
+```{r clean baseline data}
+baseline_df <- baseline_df |>
+  mutate(
+    sex = as.character (sex, '1' = "Male", '0' = "Female"),
+         apoe4 = as.character(apoe4, '0' = "Non-Carrier", '1' = "Carrier")) |>
+  filter(age_at_onset !=".")
+
+```
 
 
 

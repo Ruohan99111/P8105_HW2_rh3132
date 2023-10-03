@@ -308,7 +308,7 @@ Trash Wheel device was responsible for the collection. This dataset
 offers a thorough overview of the efforts and impacts of the Trash Wheel
 initiative over time.
 
-\##Problem 3
+## Problem 3
 
 ``` r
 baseline_df = read.csv("data_mci/MCI_baseline.csv",  skip=1) |>
@@ -316,3 +316,11 @@ baseline_df = read.csv("data_mci/MCI_baseline.csv",  skip=1) |>
 ```
 
 The data currently has 483 observations.
+
+``` r
+baseline_df <- baseline_df |>
+  mutate(
+    sex = as.character (sex, '1' = "Male", '0' = "Female"),
+         apoe4 = as.character(apoe4, '0' = "Non-Carrier", '1' = "Carrier")) |>
+  filter(age_at_onset !=".")
+```
