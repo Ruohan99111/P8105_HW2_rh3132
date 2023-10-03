@@ -178,6 +178,14 @@ The Trash Wheel dataset is a comprehensive record of trash collection spanning m
 
 ##Problem 3
 
+```{r import data}
+baseline_df = read.csv("data_mci/MCI_baseline.csv",  skip=1) |>
+  janitor::clean_names()
+```
+
+The data currently has `r nrow(baseline_df)` observations.
+
+
 
 
 

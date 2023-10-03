@@ -309,3 +309,10 @@ offers a thorough overview of the efforts and impacts of the Trash Wheel
 initiative over time.
 
 \##Problem 3
+
+``` r
+baseline_df = read.csv("data_mci/MCI_baseline.csv",  skip=1) |>
+  janitor::clean_names()
+```
+
+The data currently has 483 observations.
