@@ -152,6 +152,7 @@ gwynnda_df <- read_excel("HW2data/202309 Trash Wheel Collection Data.xlsx", shee
   filter(dumpster != "NA")
 ```
 
+##Now, combine the data
 ```{r combine the data}
 combined_df <- bind_rows(mrtrash_df, prof_trash_df, gwynnda_df)
 ```
@@ -169,8 +170,13 @@ total_cigarette_butts_july_2021 <- gwynnda_df %>%
   pull(total_cigarette_butts)
 ```
 The total number of cigarette butts collected by Gwynnda in July of 2021 is
-`r total_cigarette_butts_july_2021`.
+`r total_cigarette_butts_july_2021```.
 
+
+##Summary description of the data
+The Trash Wheel dataset is a comprehensive record of trash collection spanning multiple entries, with a total of 845 observations. Each observation in the dataset provides details about the specific `dumpster used`, the `month`, `year`, and specific `day` of the collection, as well as the `month_num` for easier chronological sorting. In terms of the collected trash's characteristics, the dataset offers insights into the `weight_tons` of the trash and its `volume_cubic_yards`. Additionally, to give a more granular view of the types of trash collected, the dataset provides specific counts for items like `plastic_bottles`, `polystyrene`, `cigarette_butts`, `glass_bottles`, `plastic_bags`, and `wrappers`. Interestingly, there's even a count for `sports_balls`. To provide an environmental perspective, a derived metric, `homes_powered`, estimates the number of homes that could be powered from the energy saved by the trash collection. Lastly, the `wheel` variable indicates which specific Trash Wheel device was responsible for the collection. This dataset offers a thorough overview of the efforts and impacts of the Trash Wheel initiative over time.
+
+##Problem 3
 
 
 
