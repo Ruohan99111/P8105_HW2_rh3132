@@ -325,5 +325,23 @@ baseline_df <- baseline_df |>
   filter(age_at_onset !=".")
 ```
 
-The average baseline age is 65.61 years. The proportion of women in the
-study are APOE4 carriers are 0.65
+The average baseline age is 65.61 years.
+
+The proportion of women in the study are APOE4 carriers are 0.65
+
+\##amyloid data
+
+``` r
+amyloid_df = 
+  read_csv("data_mci/mci_amyloid.csv",skip = 1) |> 
+  janitor::clean_names() 
+```
+
+    ## Rows: 487 Columns: 6
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (5): Baseline, Time 2, Time 4, Time 6, Time 8
+    ## dbl (1): Study ID
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.

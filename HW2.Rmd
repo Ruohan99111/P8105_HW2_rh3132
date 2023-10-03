@@ -196,8 +196,16 @@ baseline_df <- baseline_df |>
 ```
 
 The average baseline age is `r round(mean(pull(baseline_df,current_age)),digits=2)` years.
+
 The proportion of women in the study are APOE4 carriers are  `r round(nrow(filter(baseline_df, sex=="Female", apoe4=="Carrier"))/nrow(filter(baseline_df, sex=="Female")),digits=2)`
 
+
+##amyloid data
+```{r import amyloid data}
+amyloid_df = 
+  read_csv("data_mci/mci_amyloid.csv",skip = 1) |> 
+  janitor::clean_names() 
+```
 
 
 
