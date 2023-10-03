@@ -237,7 +237,7 @@ separate(date, into = c("year_2", "month_num","day"), convert = TRUE) |>
 ## Professor Trash Wheel
 
 ``` r
-prof_trash_df <- read_excel("HW2data/202309 Trash Wheel Collection Data.xlsx", sheet="Professor Trash Wheel", range = cell_cols("A:N")) %>% 
+prof_trash_df <- read_excel("HW2data/202309 Trash Wheel Collection Data.xlsx", sheet="Professor Trash Wheel", range = cell_cols("A:M")) %>% 
   janitor::clean_names() %>%
   separate(date, into = c("year_2", "month_num","day"), convert = TRUE) %>% 
   select(-year_2) %>% 
@@ -249,5 +249,17 @@ prof_trash_df <- read_excel("HW2data/202309 Trash Wheel Collection Data.xlsx", s
   filter(dumpster != "NA")
 ```
 
-    ## New names:
-    ## • `` -> `...14`
+## Gwynnda data
+
+``` r
+gwynnda_df <- read_excel("HW2data/202309 Trash Wheel Collection Data.xlsx", sheet="Gwynnda Trash Wheel", range = cell_cols("A:L")) %>% 
+  janitor::clean_names() %>%
+  separate(date, into = c("year_2", "month_num","day"), convert = TRUE) %>% 
+  select(-year_2) %>% 
+  mutate(
+    homes_powered = weight_tons * 500/30,
+    year = as.numeric(year),
+    wheel = "gwynnda"
+  ) %>%
+  filter(dumpster != "NA")
+```
