@@ -347,4 +347,11 @@ rename(id = study_id)
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
-Check for Unique Participants in baseline_df and amyloid_df
+``` r
+problem_3_combined_df <- baseline_df %>%
+  inner_join(amyloid_df, by = "id")
+```
+
+``` r
+write.csv(problem_3_combined_df, "data_mci//combined_data_problem3.csv")
+```

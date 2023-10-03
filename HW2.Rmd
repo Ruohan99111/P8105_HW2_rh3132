@@ -208,7 +208,14 @@ amyloid_df =
 rename(id = study_id)
 ```
 
-Check for Unique Participants in baseline_df and amyloid_df
+```{r combine datasets}
+problem_3_combined_df <- baseline_df %>%
+  inner_join(amyloid_df, by = "id")
+```
+
+```{r export dataset}
+write.csv(problem_3_combined_df, "data_mci//combined_data_problem3.csv")
+```
 
 
 
