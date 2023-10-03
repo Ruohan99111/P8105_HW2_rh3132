@@ -195,7 +195,7 @@ baseline_df <- baseline_df |>
 
 ```
 
-
+After cleaning, the number of observations that had an age of onset for MCI was `r nrow(baseline_df)`
 
 
 

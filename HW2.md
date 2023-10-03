@@ -324,3 +324,6 @@ baseline_df <- baseline_df |>
          apoe4 = as.character(apoe4, '0' = "Non-Carrier", '1' = "Carrier")) |>
   filter(age_at_onset !=".")
 ```
+
+After cleaning, the number of observations that had an age of onset for
+MCI was 97
