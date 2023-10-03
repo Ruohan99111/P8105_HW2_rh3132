@@ -287,7 +287,7 @@ total_cigarette_butts_july_2021 <- gwynnda_df %>%
 ```
 
 The total number of cigarette butts collected by Gwynnda in July of 2021
-is 1.63^{4}\`\`.
+is 1.63^{4}.
 
 \##Summary description of the data The Trash Wheel dataset is a
 comprehensive record of trash collection spanning multiple entries, with
