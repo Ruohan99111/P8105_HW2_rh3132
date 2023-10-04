@@ -184,20 +184,27 @@ baseline_df = read.csv("data_mci/MCI_baseline.csv",  skip=1) |>
 ```
 
 
-There are `r nrow(baseline_df)` participants recruited
-
 ```{r clean baseline data}
 baseline_df <- baseline_df |>
-  mutate(
-    sex = recode (sex, '1' = "Male", '0' = "Female"),
-         apoe4 = recode(apoe4, '0' = "Non-Carrier", '1' = "Carrier")) |>
-  filter(age_at_onset !=".")
-
+ mutate(sex = case_match(sex,
+      1 ~ "male",
+      0 ~ "female"),
+    apoe4 = case_match( apoe4,
+      1 ~ "carrier",
+      0 ~ "non-carrier")
+  ) |> 
+  filter(age_at_onset == "." | age_at_onset > current_age)
 ```
 
-The average baseline age is `r round(mean(pull(baseline_df,current_age)),digits=2)` years.
 
-The proportion of women in the study are APOE4 carriers are  `r round(nrow(filter(baseline_df, sex=="Female", apoe4=="Carrier"))/nrow(filter(baseline_df, sex=="Female")),digits=2)`
+Summary:
+There are `r nrow(baseline_df)` participants recruited.
+
+`r filter(baseline_df, age_at_onset != ".") |> nrow()` participants developed MCI during this study.
+
+The average baseline age is `r mean(pull(baseline_df, current_age)) |> round(digits = 0)`.
+
+3. The proportion of women in the study are APOE4 carriers are  `r scales::percent(nrow(filter(baseline_df, sex == "female" & apoe4 =="carrier")) / nrow(filter(baseline_df, sex == "female")))`.
 
 
 ##amyloid data
@@ -208,20 +215,44 @@ amyloid_df =
 rename(id = study_id)
 ```
 
+
+```{r wide to long format}
+amyloid_new = amyloid_df |> pivot_longer(
+  baseline:time_8,
+  names_to = "visit",
+  values_to = "amyloid_ratio"
+)
+```
+
+
+```{r merge full}
+amyloid_merge = 
+  full_join(baseline_df, amyloid_df, by = c("id"))
+```
+
 ```{r combine datasets}
 problem_3_combined_df <- baseline_df %>%
-  inner_join(amyloid_df, by = "id")
+  inner_join(amyloid_new, by = "id")
 ```
 
 ```{r export dataset}
 write.csv(problem_3_combined_df, "data_mci//combined_data_problem3.csv")
 ```
 
+In order to proceed merge file, id and study_id have to be matching, so study_id is renamed to id.
+
+There are `r nrow(amyloid_df)` participants in the dataset.
+
+MCI is recorded at baseline time of 2,4,6 and 8.
+
+After merging the data, there are `r nrow(problem_3_combined_df)` participants.
+
+Out of these dataset,
+There are `r nrow(amyloid_merge) - nrow(baseline_df)` participants in the amyloid set, however,does not exist in the baseline_df set. 
+- There are `r nrow(amyloid_merge) - nrow(amyloid_df)` participants in the baseline set, however, not in the amyloid set. 
 
 
-
-
-
+In the final merge set, there are `r nrow(problem_3_combined_df)` rows and `r ncol(problem_3_combined_df)` columns.
 
  
 

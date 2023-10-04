@@ -315,19 +315,25 @@ baseline_df = read.csv("data_mci/MCI_baseline.csv",  skip=1) |>
   janitor::clean_names()
 ```
 
-There are 483 participants recruited
-
 ``` r
 baseline_df <- baseline_df |>
-  mutate(
-    sex = recode (sex, '1' = "Male", '0' = "Female"),
-         apoe4 = recode(apoe4, '0' = "Non-Carrier", '1' = "Carrier")) |>
-  filter(age_at_onset !=".")
+ mutate(sex = case_match(sex,
+      1 ~ "male",
+      0 ~ "female"),
+    apoe4 = case_match( apoe4,
+      1 ~ "carrier",
+      0 ~ "non-carrier")
+  ) |> 
+  filter(age_at_onset == "." | age_at_onset > current_age)
 ```
 
-The average baseline age is 65.61 years.
+Summary: There are 479 participants recruited.
 
-The proportion of women in the study are APOE4 carriers are 0.65
+93 participants developed MCI during this study.
+
+The average baseline age is 65.
+
+3.  The proportion of women in the study are APOE4 carriers are 30%.
 
 \##amyloid data
 
@@ -348,10 +354,38 @@ rename(id = study_id)
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ``` r
+amyloid_new = amyloid_df |> pivot_longer(
+  baseline:time_8,
+  names_to = "visit",
+  values_to = "amyloid_ratio"
+)
+```
+
+``` r
+amyloid_merge = 
+  full_join(baseline_df, amyloid_df, by = c("id"))
+```
+
+``` r
 problem_3_combined_df <- baseline_df %>%
-  inner_join(amyloid_df, by = "id")
+  inner_join(amyloid_new, by = "id")
 ```
 
 ``` r
 write.csv(problem_3_combined_df, "data_mci//combined_data_problem3.csv")
 ```
+
+In order to proceed merge file, id and study_id have to be matching, so
+study_id is renamed to id.
+
+There are 487 participants in the dataset.
+
+MCI is recorded at baseline time of 2,4,6 and 8.
+
+After merging the data, there are 2355 participants.
+
+Out of these dataset, There are 16 participants in the amyloid set,
+however,does not exist in the baseline_df set. - There are 8
+participants in the baseline set, however, not in the amyloid set.
+
+In the final merge set, there are 2355 rows and 8 columns.
