@@ -16,7 +16,7 @@ library(tidyverse)
     ## ✖ dplyr::lag()    masks stats::lag()
     ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 
-# Read in some data
+\##Problem 1 \# Read in some data, pols, snp and unemployment
 
 ``` r
 pols_df = read_csv("HW2data/pols-month.csv")
@@ -68,7 +68,7 @@ snp_df = read_csv("HW2data/snp.csv")
 snp_df = janitor::clean_names(snp_df)
 ```
 
-\##Date cleaning
+\##Date cleaning for pols
 
 ``` r
 pols_df <- pols_df %>%
@@ -289,24 +289,24 @@ total_cigarette_butts_july_2021 <- gwynnda_df %>%
 The total number of cigarette butts collected by Gwynnda in July of 2021
 is 1.63^{4}.
 
-\##Summary description of the data The Trash Wheel dataset is a
-comprehensive record of trash collection spanning multiple entries, with
-a total of 845 observations. Each observation in the dataset provides
-details about the specific `dumpster used`, the `month`, `year`, and
-specific `day` of the collection, as well as the `month_num` for easier
-chronological sorting. In terms of the collected trash’s
-characteristics, the dataset offers insights into the `weight_tons` of
-the trash and its `volume_cubic_yards`. Additionally, to give a more
-granular view of the types of trash collected, the dataset provides
-specific counts for items like `plastic_bottles`, `polystyrene`,
-`cigarette_butts`, `glass_bottles`, `plastic_bags`, and `wrappers`.
-Interestingly, there’s even a count for `sports_balls`. To provide an
-environmental perspective, a derived metric, `homes_powered`, estimates
-the number of homes that could be powered from the energy saved by the
-trash collection. Lastly, the `wheel` variable indicates which specific
-Trash Wheel device was responsible for the collection. This dataset
-offers a thorough overview of the efforts and impacts of the Trash Wheel
-initiative over time.
+\##Summary description of the data from probelem 2 The Trash Wheel
+dataset is a comprehensive record of trash collection spanning multiple
+entries, with a total of 845 observations. Each observation in the
+dataset provides details about the specific `dumpster used`, the
+`month`, `year`, and specific `day` of the collection, as well as the
+`month_num` for easier chronological sorting. In terms of the collected
+trash’s characteristics, the dataset offers insights into the
+`weight_tons` of the trash and its `volume_cubic_yards`. Additionally,
+to give a more granular view of the types of trash collected, the
+dataset provides specific counts for items like `plastic_bottles`,
+`polystyrene`, `cigarette_butts`, `glass_bottles`, `plastic_bags`, and
+`wrappers`. Interestingly, there’s even a count for `sports_balls`. To
+provide an environmental perspective, a derived metric, `homes_powered`,
+estimates the number of homes that could be powered from the energy
+saved by the trash collection. Lastly, the `wheel` variable indicates
+which specific Trash Wheel device was responsible for the collection.
+This dataset offers a thorough overview of the efforts and impacts of
+the Trash Wheel initiative over time.
 
 ## Problem 3
 
@@ -327,13 +327,13 @@ baseline_df <- baseline_df |>
   filter(age_at_onset == "." | age_at_onset > current_age)
 ```
 
-Summary: There are 479 participants recruited.
+Summary of baseline data: There are 479 participants recruited.
 
 93 participants developed MCI during this study.
 
 The average baseline age is 65.
 
-3.  The proportion of women in the study are APOE4 carriers are 30%.
+The proportion of women in the study are APOE4 carriers are 30%.
 
 \##amyloid data
 
